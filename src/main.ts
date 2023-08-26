@@ -3,6 +3,16 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import "./utls/MyShaderChunks"
 
-createApp(App).use(store).use(router).mount('#app')
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import 'dayjs/locale/zh-cn'
+
+const app = createApp(App)
+app.use(store)
+app.use(router)
+app.use(ElementPlus,{
+    locale: zhCn,
+})
+app.mount('#app')
