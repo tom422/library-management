@@ -6,3 +6,5 @@ declare module '*.vue' {
 }
 
 declare module "*.glsl";
+
+declare module "element-plus/dist/locale/zh-cn.mjs";
