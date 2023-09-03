@@ -1,27 +1,26 @@
 <template>
   <div class="left-menu bgColor">
-
     <el-menu
-        default-active="2"
-        class="el-menu-vertical-demo"
-        :collapse="isCollapse"
-        router
-        @open="handleOpen"
-        @close="handleClose"
+      default-active="2"
+      class="el-menu-vertical-demo"
+      :collapse="isCollapse"
+      router
+      @open="handleOpen"
+      @close="handleClose"
     >
       <el-menu-item index="/">
         <el-icon><HomeFilled /></el-icon>
 
         <template #title>首页</template>
       </el-menu-item>
-      <el-sub-menu acti index="/">
+      <el-sub-menu>
         <template #title>
           <el-icon><location /></el-icon>
           <span>Navigator One</span>
         </template>
         <el-menu-item-group>
           <template #title><span>Group One</span></template>
-          <el-menu-item index="1-1">item one</el-menu-item>
+          <el-menu-item index="/userManagement">用户管理</el-menu-item>
           <el-menu-item index="1-2">item two</el-menu-item>
         </el-menu-item-group>
         <el-menu-item-group title="Group Two">
@@ -71,10 +70,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Document,
   Menu as IconMenu,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Location,
-  Setting,
+  Setting
 } from '@element-plus/icons-vue'
 
 const isCollapse = ref(false)
@@ -87,9 +88,9 @@ const handleClose = (key: string, keyPath: string[]) => {
 </script>
 
 <style scoped>
-.left-menu{
+.left-menu {
   overflow-y: auto;
- 
+
   height: 100%;
 }
 </style>

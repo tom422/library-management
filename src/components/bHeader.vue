@@ -1,7 +1,7 @@
 <template>
   <header class="books-header">
       <div class="logo">
-        <img src="../assets/Logo.png" alt="logo"  >
+        <img src="@/assets/logo.png" alt="logo"  >
          <span>图书管理系统</span>
       </div>
   </header>
