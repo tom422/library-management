@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding: 20px;">
     <div>
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="">
@@ -21,7 +21,9 @@
         </el-form-item>
       </el-form>
     </div>
-
+    <div>
+      <el-button type="primary" @click="handleAddUser">添加用户</el-button>
+    </div>
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column prop="name" label="名称" />
       <el-table-column prop="age" label="年龄" />
@@ -49,6 +51,8 @@ import { reactive, ref } from 'vue'
 import { Search } from "@element-plus/icons-vue"
 // import type { FormInstance, FormRules } from 'element-plus'
 import { getUserList } from '@/api/user'
+import { useRoute, useRouter } from 'vue-router';
+
 const tableData = ref<object[]>([])
 const formInline = reactive({
   user: '',
@@ -89,5 +93,11 @@ const getList = ()=>{
 }
 
 getList()
+
+const router = useRouter()
+
+const handleAddUser = ()=>{
+  router.push("/AddUser")
+}
 
 </script>
