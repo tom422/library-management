@@ -25,11 +25,19 @@
       <el-button type="primary" @click="handleAddUser">添加用户</el-button>
     </div>
     <el-table :data="tableData" stripe style="width: 100%">
+      <el-table-column prop="id" label="编号" />
       <el-table-column prop="name" label="名称" />
       <el-table-column prop="age" label="年龄" />
       <el-table-column prop="address" label="地址" />
-      <el-table-column prop="name" label="联系方式" />
+      <el-table-column prop="phone" label="联系方式" />
       <el-table-column prop="sex" label="性别" />
+
+      <el-table-column   label="操作" >
+        <template #default>
+            <!-- scope.row 就是当前行数据 -->
+            <el-button type="primary">编辑</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <div class="demo-pagination-block">
       <el-pagination
@@ -51,7 +59,7 @@ import { reactive, ref } from 'vue'
 import { Search } from "@element-plus/icons-vue"
 // import type { FormInstance, FormRules } from 'element-plus'
 import { getUserList } from '@/api/user'
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const tableData = ref<object[]>([])
 const formInline = reactive({

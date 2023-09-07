@@ -10,8 +10,8 @@
       class="demo-form-inline"
       label-width="150px"
     >
-      <el-form-item label="姓名:" prop="name">
-        <el-input v-model="formData.name" placeholder="请输入姓名" clearable />
+      <el-form-item label="姓名:" prop="name" >
+        <el-input  v-model="formData.name" placeholder="请输入姓名" clearable />
       </el-form-item>
       <el-form-item label="用户名:" prop="username">
         <el-input
@@ -42,7 +42,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">Query</el-button>
+        <el-button type="primary" @click="submitForm(ruleFormRef)">保存</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -51,7 +51,8 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
-
+import { saveUserApi } from '@/api/user'
+import { useRouter, useRoute } from 'vue-router'
 interface RuleForm {
   name: string
   username: string
@@ -80,9 +81,29 @@ const rules = reactive<FormRules<RuleForm>>({
   phone: [{ required: true, message: '请输入手机号', trigger: 'change' }],
   address: [{ required: true, message: '请输入地址', trigger: 'change' }],
 })
-const onSubmit = () => {
-  console.log('submit!')
+
+const router = useRouter()
+const submitForm = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      saveUserApi(formData).then(()=>{
+        resetForm(ruleFormRef.value)
+        router.back()
+      })
+
+      
+      console.log('submit!')
+    } else {
+      console.log('error submit!', fields)
+    }
+  })
 }
+const resetForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.resetFields()
+}
+
 </script>
 
 <style scoped></style>
