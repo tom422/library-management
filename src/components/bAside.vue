@@ -15,7 +15,7 @@
 
         <template #title>首页</template>
       </el-menu-item>
-      <el-sub-menu>
+      <el-sub-menu index="">
         <template #title>
           <el-icon><location /></el-icon>
           <span>Navigator One</span>
@@ -45,6 +45,7 @@ import {
   Menu as IconMenu,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Location,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Setting
 } from '@element-plus/icons-vue'
 

@@ -23,3 +23,26 @@ app.mount('#app')
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
+
+
+ 
+// eslint-disable-next-line @typescript-eslint/ban-types
+const debounce = (callback: ResizeObserverCallback, delay: number) => {
+    let tid: unknown
+    return function (...rest: [entries: ResizeObserverEntry[], observer: ResizeObserver]) {
+        const ctx = self
+        tid && clearTimeout(tid as number);
+        tid = setTimeout(() => {
+            callback.apply(ctx, rest)
+        }, delay)
+    }
+}
+
+const _ =  ResizeObserver;
+    window.ResizeObserver = class ResizeObserver extends _ {
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        constructor(callback: ResizeObserverCallback) {
+            callback = debounce(callback, 20)
+            super(callback);
+        }
+    }

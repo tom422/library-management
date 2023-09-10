@@ -7,6 +7,7 @@
             v-model="params.name"
             placeholder="请输入姓名"
             clearable
+            style="width: 200px;"
           />
         </el-form-item>
         <el-form-item label="">
@@ -14,32 +15,48 @@
             v-model="params.phone"
             placeholder="请输入联系方式"
             clearable
+            style="width: 200px;"
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="onSubmit">搜索</el-button>
+          <el-button type="primary" :icon="Search" @click="onSearch">搜索</el-button>
         </el-form-item>
       </el-form>
     </div>
-    <div>
+    <div class="button-box">
       <el-button type="primary" @click="handleAddUser">添加用户</el-button>
     </div>
-    <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="id" label="编号" />
+    <el-table :data="tableData" stripe  border style="width: 100%" empty-text="暂无数据">
+      <!-- <el-table-column type="index" label="序号" width="60"  /> -->
+      <!-- <el-table-column prop="id" label="编号" /> -->
       <el-table-column prop="name" label="名称" />
       <el-table-column prop="age" label="年龄" />
       <el-table-column prop="address" label="地址" />
       <el-table-column prop="phone" label="联系方式" />
       <el-table-column prop="sex" label="性别" />
-
+      <el-table-column prop="createtime" label="创建时间" width="180" />
       <el-table-column   label="操作" >
-        <template #default>
+        <template #default="scope">
             <!-- scope.row 就是当前行数据 -->
-            <el-button type="primary">编辑</el-button>
+            <el-button type="primary" v-on:click="handleUpdateUser(scope.row.id)">编辑</el-button>
+            <el-popconfirm
+              width="220"
+              confirm-button-text="确认"
+              cancel-button-text="取消"
+              :icon="InfoFilled"
+              icon-color="#626AEF"
+              title="你确定要删除这一条数据吗？"
+              @confirm="handleDeleteUser(scope.row.id)"
+            >
+            <template #reference>
+              <el-button type="warning">删除</el-button>
+            </template>
+          </el-popconfirm>
+           
         </template>
       </el-table-column>
     </el-table>
-    <div class="demo-pagination-block">
+    <div class="pagination">
       <el-pagination
         v-model:current-page="params.pageNum"
         v-model:page-size="params.pageSize"
@@ -55,10 +72,11 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
-import { Search } from "@element-plus/icons-vue"
+import { onActivated, reactive, ref } from 'vue'
+import { ElMessage } from "element-plus"
+import { Search,InfoFilled } from "@element-plus/icons-vue"
 // import type { FormInstance, FormRules } from 'element-plus'
-import { getUserList } from '@/api/user'
+import { deleteUserApi, getUserList } from '@/api/user'
 import { useRouter } from 'vue-router';
 
 const tableData = ref<object[]>([])
@@ -68,7 +86,7 @@ const formInline = reactive({
   date: ''
 })
 
-const onSubmit = () => {
+const onSearch = () => {
   params.pageNum = 1
   getList()
 }
@@ -94,18 +112,56 @@ const handleCurrentChange = (_val: number) => {
 
 
 const getList = ()=>{
-  getUserList(params).then(res => {
-    tableData.value = res.data.list as unknown as object[]
-    params.total = res.data.total
+  getUserList(params).then((res) => {
+    if (res.code == 200) {
+      tableData.value = res.data.list as unknown as object[]
+      params.total = res.data.total
+    } else {
+      ElMessage.error(res.msg)
+    }
+ 
   })
 }
 
-getList()
 
+
+onActivated(()=>{
+  getList()
+})
 const router = useRouter()
 
 const handleAddUser = ()=>{
   router.push("/AddUser")
 }
 
+const handleUpdateUser = (id: string)=>{
+  router.push({path:'/EditUser',query:{id}})
+}
+
+const handleDeleteUser =  (id: string)=>{
+  
+  deleteUserApi(id).then((res)=>{
+    if (res.code == 200) {
+      ElMessage.success("删除成功")
+      onSearch()
+    } else {
+      ElMessage.error(res.msg)
+    }
+  })
+}
+
+
 </script>
+
+<style lang="css" scoped>
+.pagination{
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 0;
+}
+
+.button-box{
+  text-align: right;
+  padding: 15px 0;
+}
+</style>

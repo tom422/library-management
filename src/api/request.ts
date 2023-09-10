@@ -1,12 +1,11 @@
 // 进行axios二次封装：使用请求与响应拦截器
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 // 使用了element的消息提示插件
 import { ElMessage } from "element-plus";
 // 第一步：利用axios对象的create方法，创建axios实例(其他配置：基础路径、超时的时间等)
 const request = axios.create({
   // 基础路径
-  baseURL: '/api', // 基础路径上携带/api
-  
+  baseURL: "/api", // 基础路径上携带/api
 });
 // 第二步：request实例添加请求与响应拦截器:一个回调方法
 request.interceptors.request.use((config) => {
@@ -47,7 +46,7 @@ request.interceptors.response.use(
     // 利用element提供的组件提示错误信息
     ElMessage({
       type: "error",
-      message
+      message,
     });
     // 返回失败的Promise对象终结Promise
     return Promise.reject(error);
@@ -55,4 +54,32 @@ request.interceptors.response.use(
 );
 
 // 第四步：对外暴露
-export default request;
+
+/*导出封装的请求方法*/
+import { Result } from "../utils/types"
+export default {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get<T = any>(url: string, config?: AxiosRequestConfig): Promise<Result<T>> {
+    return request.get(url, config);
+  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  post<T = any>(
+    url: string,
+    data?: object,
+    config?: AxiosRequestConfig
+  ): Promise<Result<T>> {
+    return request.post(url, data, config);
+  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  put<T = any>(
+    url: string,
+    data?: object,
+    config?: AxiosRequestConfig
+  ): Promise<Result<T>> {
+    return request.put(url, data, config);
+  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<Result<T>> {
+    return request.delete(url, config);
+  },
+};

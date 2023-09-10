@@ -15,8 +15,23 @@ export function saveUserApi(params: object){
     })
 }
 
-export function getUserInfoApi(params: object){
-    return request.post('/user/save',params).then((res)=>{
+export function getUserInfoApi(id: number | string){
+    return request.get('/user/'+id).then((res)=>{
+        console.log(res);
+        return res
+    })
+}
+
+
+export function updateUserInfoApi(data:object){
+    return request.post('/user/update',data).then((res)=>{
+        console.log(res);
+        return res
+    })
+}
+
+export function deleteUserApi(id: number | string){
+    return request.get('/user/delete/'+id).then((res)=>{
         console.log(res);
         return res
     })

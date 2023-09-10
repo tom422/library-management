@@ -8,7 +8,14 @@
           </el-aside>
           <el-container style="padding-left: 4px">
             <el-main class="bgColor">
-              <router-view></router-view>
+              
+                <router-view v-slot="{ Component }">
+                  <transition name="fade-transform" mode="out-in">
+                    <keep-alive>
+                      <component :is="Component" />
+                    </keep-alive>
+                  </transition>
+                </router-view>
             </el-main>
 <!--            <el-footer>Footer</el-footer>-->
           </el-container>

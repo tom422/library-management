@@ -49,10 +49,10 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
-import type { FormInstance, FormRules } from 'element-plus'
-import { saveUserApi } from '@/api/user'
-import { useRouter } from 'vue-router'
+import { onActivated, reactive, ref } from 'vue'
+import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
+import { updateUserInfoApi , getUserInfoApi } from '@/api/user'
+import { useRouter, useRoute } from 'vue-router'
 interface RuleForm {
   name: string
   username: string
@@ -61,7 +61,7 @@ interface RuleForm {
   phone: string
   address: string
 }
-const formData = reactive<RuleForm>({
+const formData = ref<RuleForm>({
   name: '',
   username: '',
   age: '',
@@ -83,11 +83,12 @@ const rules = reactive<FormRules<RuleForm>>({
 })
 
 const router = useRouter()
+const route = useRoute()
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      saveUserApi(formData).then(()=>{
+      updateUserInfoApi(formData.value).then(()=>{
         resetForm(ruleFormRef.value)
         router.back()
       })
@@ -103,6 +104,25 @@ const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.resetFields()
 }
+
+
+const getUserInfo = (id:string)=>{
+  getUserInfoApi(id).then((res)=>{
+    if (res.code == 200) {
+        formData.value = res.data
+    } else {
+      ElMessage.error(res.msg)
+    }
+  })
+}
+onActivated(()=>{
+  console.log(route);
+  if (route.query.id) {
+    getUserInfo(route.query.id as string)
+  }
+ 
+  
+})
 
 </script>
 
