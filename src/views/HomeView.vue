@@ -10,11 +10,12 @@
             <el-main class="bgColor">
               
                 <router-view v-slot="{ Component }">
-                  <transition name="fade-transform" mode="out-in">
-                    <keep-alive>
+                  <!-- <transition name="fade-transform" mode="out-in">
+                   
+                  </transition> -->
+                  <keep-alive>
                       <component :is="Component" />
                     </keep-alive>
-                  </transition>
                 </router-view>
             </el-main>
 <!--            <el-footer>Footer</el-footer>-->

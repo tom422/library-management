@@ -7,23 +7,39 @@ const routes: Array<RouteRecordRaw> = [
     name: 'home',
     component: HomeView,
     children:[
+      //  user 
       {
-        path: '/userManagement',
-        name: 'userManagement',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/userManagement/UserManagementView.vue')
+        path: '/user',
+        name: 'user',
+        
+        component: () => import('../views/user/UserManagementView.vue')
       },
       {
         path: '/AddUser',
         name: 'AddUser',
-        component: () => import( '../views/userManagement/AddUser.vue')
+        component: () => import( '../views/user/AddUser.vue')
       },
       {
         path: '/EditUser',
         name: 'EditUser',
-        component: () => import( '../views/userManagement/EditUser.vue')
+        component: () => import( '../views/user/EditUser.vue')
+      },
+      // 管理员 
+      {
+        path: '/admin',
+        name: 'admin',
+      
+        component: () => import( '../views/admin/AdminManagementView.vue')
+      },
+      {
+        path: '/AddAdmin',
+        name: 'AddAdmin',
+        component: () => import( '../views/admin/AddAdmin.vue')
+      },
+      {
+        path: '/EditAdmin',
+        name: 'EditAdmin',
+        component: () => import( '../views/admin/EditAdmin.vue')
       },
       {
         path: '/about',

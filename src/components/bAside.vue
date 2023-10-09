@@ -15,14 +15,26 @@
 
         <template #title>首页</template>
       </el-menu-item>
-      <el-sub-menu index="">
+      <el-sub-menu index="1">
         <template #title>
           <el-icon><location /></el-icon>
-          <span>Navigator One</span>
+          <span>会员管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/userManagement">用户管理</el-menu-item>
-          <el-menu-item index="1-2">item two</el-menu-item>
+          <el-menu-item index="/user">会员列表</el-menu-item>
+          <el-menu-item index="/addUser">添加会员</el-menu-item>
+        </el-menu-item-group>
+        
+         
+      </el-sub-menu>
+      <el-sub-menu index="2">
+        <template #title>
+          <el-icon><location /></el-icon>
+          <span>管理员管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/admin">管理员列表</el-menu-item>
+          <el-menu-item index="/AddAdmin">添加用管理员</el-menu-item>
         </el-menu-item-group>
         
          
