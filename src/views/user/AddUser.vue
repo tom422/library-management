@@ -56,15 +56,9 @@ import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { saveUserApi } from '@/api/user'
 import { useRouter } from 'vue-router'
-interface RuleForm {
-  name: string
-  username: string
-  age: string
-  sex: string
-  phone: string
-  address: string
-}
-const formData = reactive<RuleForm>({
+import { User } from '@/api/types';
+ 
+const formData = reactive<User>({
   name: '',
   username: '',
   age: '',
@@ -95,7 +89,7 @@ const ruleFormRef = ref<FormInstance>()
   }
 }
 // eslint-disable-next-line no-undef
-const rules = reactive<FormRules<RuleForm>>({
+const rules = reactive<FormRules<User>>({
   name: [{ required: true, message: '请输入姓名', trigger: 'change' }],
   username: [{ required: true, message: '请输入用户名', trigger: 'change' }],
   age: [ { required: true, message: '请输入年龄', trigger: 'change' },

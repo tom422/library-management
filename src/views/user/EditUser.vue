@@ -60,15 +60,9 @@ import { onActivated, reactive, ref } from 'vue'
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
 import { updateUserInfoApi, getUserInfoApi } from '@/api/user'
 import { useRouter, useRoute } from 'vue-router'
-interface RuleForm {
-  name: string
-  username: string
-  age: string
-  sex: string
-  phone: string
-  address: string
-}
-const formData = ref<RuleForm>({
+import { User } from '@/api/types';
+ 
+const formData = ref<User>({
   name: '',
   username: '',
   age: '',
@@ -97,7 +91,7 @@ const checkAge = (rule: any, value: string | undefined, callback: any) => {
     callback(new Error('年龄输入不合法'))
   }
 }
-const rules = reactive<FormRules<RuleForm>>({
+const rules = reactive<FormRules<User>>({
   name: [{ required: true, message: '请输入姓名', trigger: 'change' }],
   username: [{ required: true, message: '请输入用户名', trigger: 'change' }],
   age: [

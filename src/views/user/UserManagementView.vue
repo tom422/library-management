@@ -78,8 +78,9 @@ import { Search,InfoFilled } from "@element-plus/icons-vue"
 // import type { FormInstance, FormRules } from 'element-plus'
 import { deleteUserApi, getUserList } from '@/api/user'
 import { useRouter } from 'vue-router';
+import { User } from '@/api/types';
 
-const tableData = ref<object[]>([])
+const tableData = ref<User[]>([])
 const formInline = reactive({
   user: '',
   region: '',
@@ -114,7 +115,7 @@ const handleCurrentChange = (_val: number) => {
 const getList = ()=>{
   getUserList(params).then((res) => {
     if (res.code == 200) {
-      tableData.value = res.data.list as unknown as object[]
+      tableData.value = res.data.list
       params.total = res.data.total
     } else {
       ElMessage.error(res.msg)
