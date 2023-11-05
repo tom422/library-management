@@ -6,3 +6,10 @@ export interface User {
     phone: string
     address: string
   }
+
+
+  export  interface Admin {
+    username: string
+    phone: string
+    email: string
+  }

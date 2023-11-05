@@ -13,7 +13,7 @@ module.exports = defineConfig({
         // 目标服务器，所有以/api开头的请求接口代理到目标服务器
         target: 'http://localhost:9090',
         // 重写路径，此时用于匹配反向代理的/api可以替换为空
-        pathRewrite: { '^/api': '' },
+        pathRewrite: { '^/api': '/api' },
         // 如果代理到HTTPS服务器需要设置secure为true，默认为false
         secure: false
       }

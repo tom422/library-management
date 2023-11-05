@@ -33,7 +33,7 @@
       </el-form>
     </div>
     <div class="button-box">
-      <el-button type="primary" @click="handleAddAdmin">添加用户</el-button>
+      <el-button type="primary" @click="handleAddAdmin">添加管理员</el-button>
     </div>
     <el-table :data="tableData" stripe  border style="width: 100%" empty-text="暂无数据">
       <!-- <el-table-column type="index" label="序号" width="60"  /> -->

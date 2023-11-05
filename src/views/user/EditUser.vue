@@ -72,7 +72,8 @@ const formData = ref<User>({
 })
 
 const ruleFormRef = ref<FormInstance>()
-const checkAge = (rule: any, value: string | undefined, callback: any) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const checkAge = (rule: unknown, value: string | undefined, callback: any) => {
   let reg = /^(?:[1-9][0-9]?|1[01][0-9]|120)$/ //年龄是1-120之间有效
   if (value == undefined) {
     callback([new Error('帐号输入不合法')])
@@ -116,6 +117,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       updateUserInfoApi(formData.value).then(() => {
         resetForm(ruleFormRef.value)
+        ElMessage.success("修改成功")
         router.back()
       })
 

@@ -1,12 +1,17 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Layout from '../views/Layout.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: HomeView,
+    component: Layout,
     children:[
+      {
+        path: '/',
+        name: 'HomeView',
+        component: () => import('../views/home/HomeView.vue')
+      },
       //  user 
       {
         path: '/user',
@@ -49,6 +54,17 @@ const routes: Array<RouteRecordRaw> = [
       }
     ]
   },
+  {
+    path: '/Login',
+    name: 'Login',
+
+    component: () => import('../views/login/LoginView.vue')
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: "404View",
+    component: () => import('../views/404View.vue')
+  }
 
 ]
 
@@ -56,5 +72,16 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+router.beforeEach((to, from, next)=>{
+  if(to.name !== 'Login'){
+    if(sessionStorage.getItem('admin') === null){
+      next({name: 'Login'})
+    }
 
+    next()
+  }
+
+  next()
+  
+})
 export default router

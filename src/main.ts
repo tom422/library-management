@@ -16,6 +16,7 @@ app.use(store)
 app.use(router)
 app.use(ElementPlus,{
     locale: zhCn,
+    size: 'large'
 })
 app.mount('#app')
 

@@ -2,6 +2,9 @@
 import axios, { AxiosRequestConfig } from "axios";
 // 使用了element的消息提示插件
 import { ElMessage } from "element-plus";
+/*导出封装的请求方法*/
+import { Result } from "../utils/types"
+import router from "@/router";
 // 第一步：利用axios对象的create方法，创建axios实例(其他配置：基础路径、超时的时间等)
 const request = axios.create({
   // 基础路径
@@ -11,6 +14,12 @@ const request = axios.create({
 request.interceptors.request.use((config) => {
   // config配置对象，headers属性请求头，经常给服务器端携带公共参数
   // 返回配置对象
+  const admin = sessionStorage.getItem("admin")
+  if (!admin) {
+    router.push("/login");
+  }else{
+    config.headers.token = JSON.parse(admin)?.token ;
+  }
   return config;
 });
 // 第三步：响应拦截器:有两个回调方法，一个成功一个失败
@@ -18,6 +27,16 @@ request.interceptors.response.use(
   (response) => {
     // 成功回调
     // 简化数据
+    const res = response.data;
+    if (res.code == 401) {
+      
+      ElMessage({
+        type: "error",
+        message:res.message,
+      });
+      router.push("/login");
+      // return Promise.reject(res);
+    }
     return response.data;
   },
   (error) => {
@@ -55,8 +74,7 @@ request.interceptors.response.use(
 
 // 第四步：对外暴露
 
-/*导出封装的请求方法*/
-import { Result } from "../utils/types"
+
 export default {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   get<T = any>(url: string, config?: AxiosRequestConfig): Promise<Result<T>> {

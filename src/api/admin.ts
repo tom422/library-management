@@ -1,6 +1,13 @@
 import request from "./request";
 
 
+export function Login(data: object){
+    return request.post('/admin/login',data).then((res)=>{
+        console.log(res);
+        return res
+    })
+}
+
 export function getAdminList(params: object){
     return request.get('/admin/page',{params}).then((res)=>{
         console.log(res);

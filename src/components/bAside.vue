@@ -11,11 +11,10 @@
       
     >
       <el-menu-item index="/">
-        <el-icon><HomeFilled /></el-icon>
-
+        <el-icon><HomeFilled /></el-icon> 
         <template #title>首页</template>
       </el-menu-item>
-      <el-sub-menu index="1">
+      <el-sub-menu index="user"> 
         <template #title>
           <el-icon><location /></el-icon>
           <span>会员管理</span>
@@ -27,7 +26,7 @@
         
          
       </el-sub-menu>
-      <el-sub-menu index="2">
+      <el-sub-menu index="admin">
         <template #title>
           <el-icon><location /></el-icon>
           <span>管理员管理</span>
