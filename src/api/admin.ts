@@ -31,7 +31,7 @@ export function getAdminInfoApi(id: number | string){
 
 
 export function updateAdminInfoApi(data:object){
-    return request.post('/admin/update',data).then((res)=>{
+    return request.put('/admin/update',data).then((res)=>{
         console.log(res);
         return res
     })
@@ -43,3 +43,11 @@ export function deleteAdminApi(id: number | string){
         return res
     })
 }
+
+export function updateAdminNewPasswordApi(admin: object | undefined){
+    return request.put('/admin/password',admin).then((res)=>{
+        console.log(res);
+        return res
+    })
+}
+
