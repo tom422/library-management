@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>编辑管理员</h2>
+    <h2>编辑分类</h2>
     <el-form
       ref="ruleFormRef"
       :rules="rules"
@@ -10,23 +10,20 @@
       class="demo-form-inline"
       label-width="150px"
     >
-      <el-form-item label="用户名:" prop="username">
+    <el-form-item label="名称:" prop="name">
         <el-input
-          v-model="formData.username"
-          placeholder="请输入用户名"
+          v-model="formData.name"
+          placeholder="请输入名称"
           clearable
         />
       </el-form-item>
-
-      <el-form-item label="联系方式:" prop="phone">
+     
+      <el-form-item label="备注:" prop="remark">
         <el-input
-          v-model="formData.phone"
-          placeholder="请输入联系方式"
+          v-model="formData.remark"
+          placeholder="请输入备注"
           clearable
         />
-      </el-form-item>
-      <el-form-item label="邮箱:" prop="email">
-        <el-input v-model="formData.email" placeholder="请输入邮箱" clearable />
       </el-form-item>
 
       <el-form-item>
@@ -41,26 +38,20 @@
 <script setup lang="ts">
 import { onActivated, reactive, ref } from 'vue'
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
-import { updateAdminInfoApi, getAdminInfoApi } from '@/api/admin'
+import { updateCategoryInfoApi, getCategoryInfoApi } from '@/api/category'
 import { useRouter, useRoute } from 'vue-router'
-import { Admin } from '@/api/types'
+import { Category } from '@/api/types'
 
-const formData = ref<Admin>({
-  username: '',
-  phone: '',
-  email: ''
+const formData = ref<Category>({
+   name:'',
+   remark:''
 })
 
 const ruleFormRef = ref<FormInstance>()
 
-const rules = reactive<FormRules<Admin>>({
-  username: [{ required: true, message: '请输入用户名', trigger: 'change' }],
-  phone: [
-    { required: true, message: '请输入手机号', trigger: 'change' },],
-  email: [
-    { required: true, message: '请输入邮箱', trigger: 'change' },
-    { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }
-  ]
+const rules = reactive<FormRules<Category>>({
+  name: [{ required: true, message: '请输入名称', trigger: 'change' }],
+  remark: [{ required: true, message: '请输入备注', trigger: 'change' }],
 })
 
 const router = useRouter()
@@ -69,7 +60,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      updateAdminInfoApi(formData.value).then(() => {
+      updateCategoryInfoApi(formData.value).then(() => {
         resetForm(ruleFormRef.value)
         ElMessage.success('修改成功')
         router.back()
@@ -86,8 +77,8 @@ const resetForm = (formEl: FormInstance | undefined) => {
   formEl.resetFields()
 }
 
-const getAdminInfo = (id: string) => {
-  getAdminInfoApi(id).then(res => {
+const getCategoryInfo = (id: string) => {
+  getCategoryInfoApi(id).then(res => {
     if (res.code == 200) {
       formData.value = res.data
     } else {
@@ -98,7 +89,7 @@ const getAdminInfo = (id: string) => {
 onActivated(() => {
   console.log(route)
   if (route.query.id) {
-    getAdminInfo(route.query.id as string)
+    getCategoryInfo(route.query.id as string)
   }
 })
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="login-page">
-    <el-card class="box-card" v-if="show">
+    <el-card class="box-card" v-show="show">
       <slide-verify
         class="silde_box"
         ref="block"
@@ -112,6 +112,7 @@ const login = () => {
         sessionStorage.setItem('admin', JSON.stringify(res.data))
       } else {
         ElMessage.error(res.msg)
+        show.value = false
         handleClick()
       }
     })

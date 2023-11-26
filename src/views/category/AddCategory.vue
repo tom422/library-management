@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>新增管理员</h2>
+    <h2>新增分类</h2>
     <el-form
       ref="ruleFormRef"
       :rules="rules"
@@ -11,28 +11,22 @@
       label-width="150px"
     >
    
-      <el-form-item label="用户名:" prop="username">
+      <el-form-item label="名称:" prop="name">
         <el-input
-          v-model="formData.username"
-          placeholder="请输入用户名"
+          v-model="formData.name"
+          placeholder="请输入名称"
           clearable
         />
       </el-form-item>
      
-      <el-form-item label="联系方式:" prop="phone">
+      <el-form-item label="备注:" prop="remark">
         <el-input
-          v-model="formData.phone"
-          placeholder="请输入联系方式"
+          v-model="formData.remark"
+          placeholder="请输入备注"
           clearable
         />
       </el-form-item>
-      <el-form-item label="邮箱:" prop="email">
-        <el-input
-          v-model="formData.email"
-          placeholder="请输入邮箱"
-          clearable
-        />
-      </el-form-item>
+ 
 
       <el-form-item>
         <el-button type="primary" @click="submitForm(ruleFormRef)">保存</el-button>
@@ -44,22 +38,20 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
-import { saveAdminApi } from '@/api/admin'
+import { saveCategoryApi } from '@/api/category'
 import { useRouter } from 'vue-router'
-import { Admin } from '@/api/types';
+import { Category } from '@/api/types';
 
-const formData = reactive<Admin>({
-  username: '',
-  phone: '',
-  email: ''
+const formData = reactive<Category>({
+   name:'',
+   remark:''
 })
 
 const ruleFormRef = ref<FormInstance>()
 // eslint-disable-next-line no-undef
-const rules = reactive<FormRules<Admin>>({
-  username: [{ required: true, message: '请输入用户名', trigger: 'change' }],
-  phone: [{ required: true, message: '请输入手机号', trigger: 'change' }],
-  email: [{ required: true, message: '请输入邮箱', trigger: 'change' }, { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }],
+const rules = reactive<FormRules<Category>>({
+  name: [{ required: true, message: '请输入名称', trigger: 'change' }],
+  remark: [{ required: true, message: '请输入备注', trigger: 'change' }],
 })
 
 const router = useRouter()
@@ -67,7 +59,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      saveAdminApi(formData).then((res)=>{
+      saveCategoryApi(formData).then((res)=>{
         if(res.code == 200){
           resetForm(ruleFormRef.value)
           router.back()

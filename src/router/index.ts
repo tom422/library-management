@@ -46,6 +46,24 @@ const routes: Array<RouteRecordRaw> = [
         name: 'EditAdmin',
         component: () => import( '../views/admin/EditAdmin.vue')
       },
+
+      // 图书分类 
+      {
+        path: '/category',
+        name: 'category',
+      
+        component: () => import( '../views/category/CategoryManagementView.vue')
+      },
+      {
+        path: '/AddCategory',
+        name: 'AddCategory',
+        component: () => import( '../views/category/AddCategory.vue')
+      },
+      {
+        path: '/EditCategory',
+        name: 'EditCategory',
+        component: () => import( '../views/category/EditCategory.vue')
+      },
       {
         path: '/about',
         name: 'about',

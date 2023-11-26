@@ -33,17 +33,30 @@
         </template>
         <el-menu-item-group>
           <el-menu-item index="/admin">管理员列表</el-menu-item>
-          <el-menu-item index="/AddAdmin">添加用管理员</el-menu-item>
+          <el-menu-item index="/AddAdmin">添加管理员</el-menu-item>
+        </el-menu-item-group>
+        
+         
+      </el-sub-menu>
+
+      <el-sub-menu index="category">
+        <template #title>
+          <el-icon><location /></el-icon>
+          <span>分类管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/category">分类列表</el-menu-item>
+          <el-menu-item index="/AddCategory">添加分类</el-menu-item>
         </el-menu-item-group>
         
          
       </el-sub-menu>
 
       
-      <el-menu-item index="/about">
+      <!-- <el-menu-item index="/about">
         <el-icon><icon-menu /></el-icon>
         <template #title>Navigator Two</template>
-      </el-menu-item>
+      </el-menu-item> -->
     </el-menu>
   </div>
 </template>
