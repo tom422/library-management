@@ -25,11 +25,17 @@
             <el-input v-model="formData.publisher" placeholder="请输入出版社" clearable />
           </el-form-item>
           <el-form-item label="分类:" prop="categories">
-            <el-cascader v-model="formData.categories" :options="categoryTree"  :props="{ value:'name', label:'name'}"  @change="handleChange" />
-            <el-input v-model="formData.category" placeholder="请输入分类" clearable />
+            <el-cascader v-model="formData.categories" :options="categoryTree"  :props="{ value:'name', label:'name'}" />
           </el-form-item>
           <el-form-item label="图书标准码:" prop="bookNo">
             <el-input v-model="formData.bookNo" placeholder="请输入标准码" clearable />
+          </el-form-item>
+          <el-form-item label="所需积分:" prop="score">
+            <!-- <el-input v-model="formData.score" placeholder="请输入借书积分" clearable /> -->
+            <el-input-number v-model="formData.score" :min="10" :max="30"  />
+          </el-form-item>
+          <el-form-item label="数量:" prop="nums">
+            <el-input v-model="formData.nums" placeholder="请输入数量" clearable />
           </el-form-item>
           <el-form-item label="图书封面:" prop="cover">
             <el-input v-model="formData.cover" placeholder="请输入封面" clearable />
@@ -61,6 +67,8 @@ const formData = ref<Book>({
   category: '',
   bookNo: '',
   cover: '',
+  score: 10,
+  nums:0
 })
 
 const ruleFormRef = ref<FormInstance>()
@@ -74,6 +82,20 @@ const rules = reactive<FormRules<Book>>({
   categories: [{ required: true, message: '请选择分类', trigger: 'change' }],
   bookNo: [{ required: true, message: '请输入标准码', trigger: 'change' }],
   cover: [{ required: true, message: '请输入封面', trigger: 'change' }],
+  score: [{ required: true, message: '请输入借书积分', trigger: 'change' }],
+  nums: [{ required: true, message: '请输入数量', trigger: 'change' },
+  {
+     validator: (rule,value,callback) => {
+      value = parseInt(value)
+      // eslint-disable-next-line no-empty
+      if (!Number.isInteger(value) || value < 0 || value > 1000) {
+        callback(new Error('请输入大于0,小于1000的整数'))
+      }
+
+      callback()
+    },
+    trigger: 'change'
+  }],
 })
 
 
@@ -108,8 +130,9 @@ const resetForm = (formEl: FormInstance | undefined) => {
 const getBookInfo = (id: string) => {
   getBookInfoApi(id).then(res => {
     if (res.code == 200) {
+      res.data.categories = res.data.category.split('>')
       formData.value = res.data
-      formData.value.categories = res.data.category.split('>')
+ 
     } else {
       ElMessage.error(res.msg)
     }

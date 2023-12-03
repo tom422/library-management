@@ -7,9 +7,22 @@ export function getUserList(params: object){
         return res
     })
 }
+export function getUserAll(){
+    return request.get('/user/list').then((res)=>{
+        console.log(res);
+        return res
+    })
+}
 
 export function saveUserApi(params: object){
     return request.post('/user/save',params).then((res)=>{
+        console.log(res);
+        return res
+    })
+}
+
+export function addAccountApi(params: object){
+    return request.post('/user/account',params).then((res)=>{
         console.log(res);
         return res
     })

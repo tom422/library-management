@@ -8,8 +8,8 @@ export function getCategoryList(params: object){
     })
 }
 
-export function getCategoryTree(params: object){
-    return request.get('/category/tree',{params}).then((res)=>{
+export function getCategoryTree(){
+    return request.get('/category/tree').then((res)=>{
         console.log(res);
         return res
     })

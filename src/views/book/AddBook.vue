@@ -2,43 +2,50 @@
   <div>
     <h2>新增图书</h2>
     <div class="form_box">
-      <el-form ref="ruleFormRef" :rules="rules"   :model="formData" status-icon class="demo-form-inline"
-      label-width="100px" label-position="left">
+      <el-form ref="ruleFormRef" :rules="rules" :model="formData" status-icon class="demo-form-inline" label-width="100px"
+        label-position="left">
 
-      <el-form-item label="图书名称:" prop="name">
-        <el-input  v-model="formData.name" placeholder="请输入名称" clearable />
-      </el-form-item>
+        <el-form-item label="图书名称:" prop="name">
+          <el-input v-model="formData.name" placeholder="请输入名称" clearable />
+        </el-form-item>
 
-      <el-form-item label="图书描述:" prop="description">
-        <el-input type="textarea" v-model="formData.description" placeholder="请输入图书描述" clearable />
-      </el-form-item>
-      <el-form-item label="出版日期:" prop="publishDate">
-        <el-date-picker style="width:100%" v-model="formData.publishDate"   value-format="YYYY-MM-DD" type="date" placeholder="请输入出版日期"  />
-        <!-- <el-input v-model="formData.publishDate" placeholder="请输入出版日期" clearable /> -->
-      </el-form-item>
-      <el-form-item label="作者:" prop="author">
-        <el-input v-model="formData.author" placeholder="请输入作者" clearable />
-      </el-form-item>
-      <el-form-item label="出版社:" prop="publisher">
-        <el-input v-model="formData.publisher" placeholder="请输入出版社" clearable />
-      </el-form-item>
-      <el-form-item label="分类:" prop="categories">
-        <el-cascader v-model="formData.categories" :options="categoryTree"  :props="{ value:'name', label:'name'}"  @change="handleChange" />
-        <el-input v-model="formData.categories"  placeholder="请输入分类" clearable />
-      </el-form-item>
-      <el-form-item label="图书标准码:" prop="bookNo">
-        <el-input v-model="formData.bookNo" placeholder="请输入标准码" clearable />
-      </el-form-item>
-      <el-form-item label="图书封面:" prop="cover">
-        <el-input v-model="formData.cover" placeholder="请输入封面" clearable />
-      </el-form-item>
+        <el-form-item label="图书描述:" prop="description">
+          <el-input type="textarea" v-model="formData.description" placeholder="请输入图书描述" clearable />
+        </el-form-item>
+        <el-form-item label="出版日期:" prop="publishDate">
+          <el-date-picker style="width:100%" v-model="formData.publishDate" value-format="YYYY-MM-DD" type="date"
+            placeholder="请输入出版日期" />
+          <!-- <el-input v-model="formData.publishDate" placeholder="请输入出版日期" clearable /> -->
+        </el-form-item>
+        <el-form-item label="作者:" prop="author">
+          <el-input v-model="formData.author" placeholder="请输入作者" clearable />
+        </el-form-item>
+        <el-form-item label="出版社:" prop="publisher">
+          <el-input v-model="formData.publisher" placeholder="请输入出版社" clearable />
+        </el-form-item>
+        <el-form-item label="分类:" prop="categories">
+          <el-cascader v-model="formData.categories" :options="categoryTree" :props="{ value: 'name', label: 'name' }" />
+        </el-form-item>
+        <el-form-item label="图书标准码:" prop="bookNo">
+          <el-input v-model="formData.bookNo" placeholder="请输入标准码" clearable />
+        </el-form-item>
+        <el-form-item label="所需积分:" prop="score">
+          <!-- <el-input v-model="formData.score" placeholder="请输入所需积分" clearable /> -->
+          <el-input-number v-model="formData.score" :min="10" :max="30" />
+        </el-form-item>
+        <el-form-item label="数量:" prop="nums">
+          <el-input v-model="formData.nums" placeholder="请输入数量" clearable />
+        </el-form-item>
+        <el-form-item label="图书封面:" prop="cover">
+          <el-input v-model="formData.cover" placeholder="请输入封面" clearable />
+        </el-form-item>
 
-      <el-form-item>
-        <el-button type="primary" @click="submitForm(ruleFormRef)">保存</el-button>
-      </el-form-item>
-    </el-form>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm(ruleFormRef)">保存</el-button>
+        </el-form-item>
+      </el-form>
     </div>
-   
+
   </div>
 </template>
 
@@ -59,6 +66,8 @@ const formData = ref<Book>({
   category: '',
   bookNo: '',
   cover: '',
+  score: 10,
+  nums: 0
 })
 
 const ruleFormRef = ref<FormInstance>()
@@ -71,7 +80,21 @@ const rules = reactive<FormRules<Book>>({
   publisher: [{ required: true, message: '请输入出版社', trigger: 'change' }],
   categories: [{ required: true, message: '请选择分类', trigger: 'change' }],
   bookNo: [{ required: true, message: '请输入标准码', trigger: 'change' }],
+  score: [{ required: true, message: '请输入积分', trigger: 'change' }],
   cover: [{ required: true, message: '请输入封面', trigger: 'change' }],
+  nums: [{ required: true, message: '请输入数量', trigger: 'change' },
+  {
+     validator: (rule,value,callback) => {
+      value = parseInt(value)
+      // eslint-disable-next-line no-empty
+      if (!Number.isInteger(value) || value < 0 || value > 1000) {
+        callback(new Error('请输入大于0,小于1000的整数'))
+      }
+
+      callback()
+    },
+    trigger: 'change'
+  }],
 })
 
 const router = useRouter()
@@ -113,9 +136,7 @@ const getCategory = async () => {
   })
 }
 getCategory()
-const handleChange = (value) => {
-  console.log(value)
-}
+
 
 </script>
 

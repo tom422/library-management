@@ -8,6 +8,14 @@ export function getBookList(params: object){
     })
 }
 
+
+export function getBookAll(){
+    return request.get('/book/list').then((res)=>{
+        console.log(res);
+        return res
+    })
+}
+
 export function saveBookApi(params: object){
     return request.post('/book/save',params).then((res)=>{
         console.log(res);

@@ -68,7 +68,9 @@ const formData = ref<User>({
   age: '',
   sex: '',
   phone: '',
-  address: ''
+  address: '',
+  account: 0,
+  score: 0
 })
 
 const ruleFormRef = ref<FormInstance>()

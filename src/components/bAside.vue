@@ -65,6 +65,19 @@
          
       </el-sub-menu>
 
+      <el-sub-menu index="borrow">
+        <template #title>
+          <el-icon><location /></el-icon>
+          <span>借书管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/borrow">借书列表</el-menu-item>
+          <el-menu-item index="/AddBorrow">添加借书</el-menu-item>
+        </el-menu-item-group>
+        
+         
+      </el-sub-menu>
+
       
       <!-- <el-menu-item index="/about">
         <el-icon><icon-menu /></el-icon>

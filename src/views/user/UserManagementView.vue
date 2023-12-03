@@ -34,10 +34,12 @@
       <el-table-column prop="address" label="地址" />
       <el-table-column prop="phone" label="联系方式" />
       <el-table-column prop="sex" label="性别" />
-      <el-table-column prop="createtime" label="创建时间" width="180" />
-      <el-table-column   label="操作" >
+      <el-table-column prop="account" label="账户积分" />
+      <el-table-column prop="createtime" label="创建时间"  />
+      <el-table-column   label="操作" width="280" >
         <template #default="scope">
             <!-- scope.row 就是当前行数据 -->
+            <el-button type="warning" v-on:click="RechargeDialogRef!.open(scope.row)">充值</el-button>
             <el-button type="primary" v-on:click="handleUpdateUser(scope.row.id)">编辑</el-button>
             <el-popconfirm
               width="220"
@@ -68,6 +70,7 @@
         @current-change="handleCurrentChange"
       />
     </div>
+    <RechargeDialog ref="RechargeDialogRef"></RechargeDialog>
   </div>
 </template>
 
@@ -79,7 +82,8 @@ import { Search,InfoFilled } from "@element-plus/icons-vue"
 import { deleteUserApi, getUserList } from '@/api/user'
 import { useRouter } from 'vue-router';
 import { User } from '@/api/types';
-
+import RechargeDialog from './RechargeDialog.vue'
+const RechargeDialogRef = ref<typeof RechargeDialog>()
 const tableData = ref<User[]>([])
 const formInline = reactive({
   user: '',

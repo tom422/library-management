@@ -1,10 +1,15 @@
 export interface User {
+
+  
+  id?:undefined
   name: string;
   username: string;
   age: string;
   sex: string;
   phone: string;
   address: string;
+  account:number
+  score: number;
 }
 
 export interface Admin {
@@ -19,7 +24,6 @@ export interface Category {
   remark: string;
 }
 
-
 export interface Book {
   id?: number;
   name: string;
@@ -32,5 +36,23 @@ export interface Book {
   createtime?: string;
   updatetime?: string;
   cover: string;
-  categories?:string[];
+  score:number
+  nums:number
+  categories?: string[];
+}
+
+export interface Borrow {
+  id?: number;
+  bookName: string;
+  bookNo: string;
+  publishDate: string;
+  userNo: string;
+  userName: string;
+  userPhone: string;
+  score: number;
+  createtime?: string;
+  updatetime?: string;
+  nums?:number
+  account:number
+ 
 }
