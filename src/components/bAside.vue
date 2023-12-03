@@ -52,6 +52,19 @@
          
       </el-sub-menu>
 
+      <el-sub-menu index="book">
+        <template #title>
+          <el-icon><location /></el-icon>
+          <span>图书管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/book">图书列表</el-menu-item>
+          <el-menu-item index="/AddBook">添加图书</el-menu-item>
+        </el-menu-item-group>
+        
+         
+      </el-sub-menu>
+
       
       <!-- <el-menu-item index="/about">
         <el-icon><icon-menu /></el-icon>

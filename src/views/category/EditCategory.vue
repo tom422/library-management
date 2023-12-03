@@ -60,10 +60,15 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      updateCategoryInfoApi(formData.value).then(() => {
-        resetForm(ruleFormRef.value)
-        ElMessage.success('修改成功')
-        router.back()
+      updateCategoryInfoApi(formData.value).then((res) => {
+        if (res.code == 200) {
+          resetForm(ruleFormRef.value)
+          ElMessage.success('修改成功')
+          router.back()
+        } else {
+          ElMessage.error(res.msg)
+        }
+        
       })
 
       console.log('submit!')

@@ -18,3 +18,19 @@ export interface Category {
   name: string;
   remark: string;
 }
+
+
+export interface Book {
+  id?: number;
+  name: string;
+  description: string;
+  publishDate: string;
+  author: string;
+  publisher: string;
+  category: string;
+  bookNo: string;
+  createtime?: string;
+  updatetime?: string;
+  cover: string;
+  categories?:string[];
+}

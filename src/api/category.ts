@@ -8,6 +8,13 @@ export function getCategoryList(params: object){
     })
 }
 
+export function getCategoryTree(params: object){
+    return request.get('/category/tree',{params}).then((res)=>{
+        console.log(res);
+        return res
+    })
+}
+
 export function saveCategoryApi(params: object){
     return request.post('/category/save',params).then((res)=>{
         console.log(res);
