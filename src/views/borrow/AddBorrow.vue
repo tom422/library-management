@@ -42,14 +42,17 @@
           </el-select>
         </el-form-item>
         <el-form-item label="用户名称:" prop="userName">
-          <el-input v-model="formData.userName" placeholder="请输入分类" clearable />
+          <el-input v-model="formData.userName" disabled placeholder="请输入分类" clearable />
         </el-form-item>
     
         <el-form-item label="用户联系方式:" prop="userPhone">
-          <el-input v-model="formData.userPhone" placeholder="请输入用户联系方式" clearable />
+          <el-input v-model="formData.userPhone" disabled placeholder="请输入用户联系方式" clearable />
         </el-form-item>
         <el-form-item label="用户积分:" prop="account">
-          <el-input v-model="formData.account" placeholder="请输入用户联系方式" clearable />
+          <el-input v-model="formData.account" disabled placeholder="请输入用户联系方式" clearable />
+        </el-form-item>
+        <el-form-item label="借书天数:" prop="days">
+          <el-input-number :min="1" :max="30"  v-model="formData.days"  clearable />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm(ruleFormRef)">保存</el-button>
@@ -78,7 +81,8 @@ const formData = ref<Borrow>({
   userPhone: '',
   score: 0,
   nums:0,
-  account:0
+  account:0,
+  days:1
 })
 
 const ruleFormRef = ref<FormInstance>()

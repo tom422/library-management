@@ -29,8 +29,19 @@
       <el-table-column prop="userNo" label="会员码" width="200px"  />
       <el-table-column prop="userName" label="用户名称" width="200px"  />
       <el-table-column prop="userPhone" label="用户联系方式" width="200px"  />
-      <el-table-column prop="score" label="借书积分" width="200px"  />
-      <el-table-column prop="createtime" label="创建时间" width="180" />
+      <el-table-column prop="score" label="所用积分" width="200px"  />
+      <el-table-column prop="createtime" label="借出日期" width="180" />
+      <el-table-column prop="status" label="借出状态" width="180" />
+      <el-table-column prop="days" label="借出天数" width="180" />
+      <el-table-column prop="returnDate" label="归还日期" width="180" />
+      <el-table-column prop="note" label="过期提醒" width="180" >
+        <template #default="scope">
+          <el-tag type="success" v-if="scope.row.note=='正常'"> {{ scope.row.note }} </el-tag>
+          <el-tag type="primary" v-if="scope.row.note=='即将到期'"> {{ scope.row.note }} </el-tag>
+          <el-tag type="warning" v-if="scope.row.note=='已到期'"> {{ scope.row.note }} </el-tag>
+          <el-tag type="danger" v-if="scope.row.note=='已过期'"> {{ scope.row.note }} </el-tag>
+        </template>
+      </el-table-column>
       <!-- <el-table-column prop="updatetime" label="更新时间" width="180" /> -->
       <el-table-column label="操作" width="250"  fixed="right">
         <template #default="scope">

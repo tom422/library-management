@@ -54,5 +54,5 @@ export interface Borrow {
   updatetime?: string;
   nums?:number
   account:number
- 
+  days:number
 }

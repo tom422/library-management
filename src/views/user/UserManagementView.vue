@@ -70,7 +70,7 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <RechargeDialog ref="RechargeDialogRef"></RechargeDialog>
+    <RechargeDialog ref="RechargeDialogRef" @success="onSearch"></RechargeDialog>
   </div>
 </template>
 
