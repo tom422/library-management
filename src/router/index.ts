@@ -99,6 +99,14 @@ const routes: Array<RouteRecordRaw> = [
         name: "EditBorrow",
         component: () => import("../views/borrow/EditBorrow.vue"),
       },
+
+      {
+        path: "/ReturManagementView",
+        name: "ReturManagementView",
+        component: () => import("../views/retur/ReturManagementView.vue"),
+      },
+
+
       {
         path: "/about",
         name: "about",

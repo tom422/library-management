@@ -34,20 +34,7 @@
       <el-table-column prop="status" label="借出状态" width="180" />
       <el-table-column prop="days" label="借出天数" width="180" />
       <el-table-column prop="returnDate" label="归还日期" width="180" />
-      <el-table-column prop="note" label="过期提醒" width="180" >
-        <template #default="scope">
-          <el-tag type="success" v-if="scope.row.note=='正常'"> {{ scope.row.note }} </el-tag>
-          <el-tag type="primary" v-if="scope.row.note=='即将到期'"> {{ scope.row.note }} </el-tag>
-          <el-tag type="warning" v-if="scope.row.note=='已到期'"> {{ scope.row.note }} </el-tag>
-          <el-tag type="danger" v-if="scope.row.note=='已过期'"> {{ scope.row.note }} </el-tag>
-        </template>
-      </el-table-column>
-    
-      <el-table-column label="管理" width="250"  fixed="right">
-        <template #default="scope">
-          <el-button type="primary" v-on:click="returnBooks(scope.row)">还书</el-button>
-        </template>
-      </el-table-column>
+      <!-- <el-table-column prop="updatetime" label="更新时间" width="180" /> -->
       <el-table-column label="操作" width="250"  fixed="right">
         <template #default="scope">
           <!-- scope.row 就是当前行数据 -->
@@ -131,10 +118,8 @@ const handleAddBorrow = () => {
   router.push('/AddBorrow')
 }
 
-// 还书
-const returnBooks = (row: object) => {
-  console.log(row);
-  
+const handleUpdateBorrow = (id: string) => {
+  router.push({ path: '/EditBorrow', query: { id } })
 }
 
 const handleDeleteBorrow = (id: string) => {

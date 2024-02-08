@@ -78,6 +78,18 @@
          
       </el-sub-menu>
 
+      <el-sub-menu index="retur">
+        <template #title>
+          <el-icon><location /></el-icon>
+          <span>还书管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/ReturManagementView">还书列表</el-menu-item>
+        </el-menu-item-group>
+        
+         
+      </el-sub-menu>
+
       
       <!-- <el-menu-item index="/about">
         <el-icon><icon-menu /></el-icon>
